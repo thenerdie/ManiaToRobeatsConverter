@@ -1,53 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ASCII">
-</head>
-<body>
-<script>
-var module = {}
-module.__exports = {}
-module.export = function(name, obj) {
-	if (module.__exports[name] != null) {
-		throw "export already exists::"+name
-	}
-	module.__exports[name] = obj
-}
-module.require = function(name) {
-	if (module.__exports[name] == null) {
-		throw "require cannot find::"+name
-	}
-	return module.__exports[name]
-}
-</script>
-<script src="curves.js"></script>
-<script src="slidercalc.js"></script>
-<script src="osuparser.js"></script>
-<script src="format.js"></script>
-<script src="osu_to_lua.js"></script>
+	<head>
+		<meta charset="ASCII">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="jquery-3.5.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    	<link href="https://fonts.googleapis.com/css?family=Open+Sans:700,800&display=swap" rel="stylesheet">
+    	<link rel="stylesheet" type="text/css" href="main.css">
+	</head>
+	<body>
+		<script>
+			var module = {}
+			module.__exports = {}
+			module.export = function(name, obj) {
+				if (module.__exports[name] != null) {
+					throw "export already exists::"+name
+				}
+				module.__exports[name] = obj
+			}
+			module.require = function(name) {
+				if (module.__exports[name] == null) {
+					throw "require cannot find::"+name
+				}
+				return module.__exports[name]
+			}
+		</script>
 
-<script src="jquery.js"></script>
-<script>
-$(function(){
-  $("#submit").click(function(){
-    $("#out").val("converting...")
-			var osu_file_str = $("#in").val()
-			$("#out").val(module.require("osu_to_lua")(osu_file_str))
-  })
-})
-</script>
-<a href="https://github.com/spotco/RobeatsWebConvert2">Source</a><br/>
-<textarea id="in" style="width:1000px;height:200px">
-  paste contents of osu file here
-</textarea>
-<br/>
-<button id="submit">CONVERT</button>
-<br/>
-<br/>
-<br/>
-<br/>
-<textarea id="out" style="width:1000px;height:200px" readonly>
-  output (paste this into the "SongMap" script in the workspace)
-</textarea>
-</body>
+		<script src="curves.js"></script>
+		<script src="slidercalc.js"></script>
+		<script src="osuparser.js"></script>
+		<script src="format.js"></script>
+		<script src="osu_to_lua.js"></script>
+
+		<script src="jquery.js"></script>
+		<script>
+			$(function(){
+  				$("#submit").click(function(){
+    				$("#out").val("converting...")
+					var osu_file_str = $("#in").val()
+					$("#out").val(module.require("osu_to_lua")(osu_file_str))
+				})
+				$("#source").click(function(){
+    				var win = window.open('https://github.com/spotco/RobeatsWebConvert2', '_blank');
+					if (win) {
+    					win.focus();
+					} else {
+    					alert('Please allow popups for this website');
+					}
+  				})
+			})
+		</script>
+		<button type="button" class="btn btn-light" id="source" style="width: 10%;margin-left: 1%;margin-top: 1%;">SOURCE</button>
+		<textarea type="text" class="form-control" rows="8" id="in" style="width: 80%;margin-top: 5%;margin-bottom: 5%;margin-left: auto;margin-right: auto;" placeholder="Paste contents of the .osu file here."></textarea>
+		<div class="text-center">
+			<button type="button" class="btn btn-light" id="submit" style="width: 20%;margin-left: auto;margin-right: auto;">CONVERT</button>
+		</div>
+		<textarea type="text" class="form-control" rows="8" id="out" style="width: 80%;margin-top: 5%;margin-bottom: 5%;margin-left: auto;margin-right: auto;" placeholder='Converter output' readonly></textarea>
+	</body>
 </html>
