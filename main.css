@@ -1,0 +1,9 @@
+body {
+    height: 100%;
+    margin: 0;
+    background-attachment: fixed;
+    background-color:rgba(35,35,35,100);
+    font-family: 'Open Sans', sans-serif;
+    background-image: url('images/bg.png');
+    background-repeat: no-repeat;
+}
