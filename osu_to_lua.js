@@ -105,7 +105,7 @@ module.export("osu_to_lua", function(osu_file_contents) {
   append_to_output(format("rtv.%s = \"%s\"","AudioDescription",""));
   append_to_output(format("rtv.%s = \"%s\"","AudioCoverImageAssetId","--FILL IN COVERART ASSETID HERE--"));
   append_to_output(format("rtv.%s = \"%s\"","AudioArtist",""));
-  append_to_output(format("rtv.%s = \"%s\"", "AudioId", makeid(30)))
+  append_to_output(format("rtv.%s = \"%s\"", "AudioId", makeid(80)))
 
   append_to_output(format("rtv.%s = %d","AudioDifficulty",1));
   append_to_output(format("rtv.%s = %d","AudioTimeOffset",-75));
