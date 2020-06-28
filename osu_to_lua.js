@@ -113,6 +113,8 @@ module.export("osu_to_lua", function(osu_file_contents) {
   append_to_output(format("rtv.%s = %d","AudioNotePrebufferTime",1500));
   append_to_output(format("rtv.%s = %d","AudioMod",0));
   append_to_output(format("rtv.%s = %d","AudioHitSFXGroup",0));
+  append_to_output(format("rtv.%s = \"%s\"", "AudioDifficultyName", ""))
+  append_to_output(format("rtv.%s = %s", "AudioButtonColor", "Color3.new(1,1,1)"))
 
   append_to_output("rtv.HitObjects = {}")
 	append_to_output("local function note(time,track) rtv.HitObjects[#rtv.HitObjects+1]={Time=time;Type=1;Track=track;} end")
