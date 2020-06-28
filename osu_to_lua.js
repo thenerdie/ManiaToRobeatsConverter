@@ -100,12 +100,13 @@ module.export("osu_to_lua", function(osu_file_contents) {
   })
 
 	append_to_output("local rtv = {}");
-  append_to_output(format("rtv.%s = \"%s\"","AudioAssetId","--FILL IN SOUND ASSETID HERE--"));
+  append_to_output(format("rtv.%s = \"%s\"","AudioAssetId","rbxassetid://"));
   append_to_output(format("rtv.%s = \"%s\"","AudioFilename",beatmap.Title));
   append_to_output(format("rtv.%s = \"%s\"","AudioDescription",""));
   append_to_output(format("rtv.%s = \"%s\"","AudioCoverImageAssetId","--FILL IN COVERART ASSETID HERE--"));
-  append_to_output(format("rtv.%s = \"%s\"","AudioArtist",""));
-  append_to_output(format("rtv.%s = \"%s\"", "AudioId", makeid(80)))
+  append_to_output(format("rtv.%s = \"%s\"","AudioArtist",beatmap.Artist));
+  append_to_output(format("rtv.%s = \"%s\"", "AudioId", makeid(35)));
+  append_to_output(format("rtv.%s = \"%s\"", "AudioMapper", beatmap.Creator));
 
   append_to_output(format("rtv.%s = %d","AudioDifficulty",1));
   append_to_output(format("rtv.%s = %d","AudioTimeOffset",-75));
@@ -117,8 +118,8 @@ module.export("osu_to_lua", function(osu_file_contents) {
   append_to_output(format("rtv.%s = %s", "AudioButtonColor", "Color3.new(1,1,1)"))
 
   append_to_output("rtv.HitObjects = {}")
-	append_to_output("local function note(time,track) rtv.HitObjects[#rtv.HitObjects+1]={Time=time;Type=1;Track=track;} end")
-	append_to_output("local function hold(time,track,duration) rtv.HitObjects[#rtv.HitObjects+1] = {Time=time;Type=2;Track=track;Duration=duration;}  end")
+	append_to_output("local function nt(time,track) rtv.HitObjects[#rtv.HitObjects+1]={Time=time;Type=1;Track=track;} end")
+	append_to_output("local function hd(time,track,duration) rtv.HitObjects[#rtv.HitObjects+1] = {Time=time;Type=2;Track=track;Duration=duration;}  end")
   append_to_output("--")
 
   for (var i = 0; i < beatmap.hitObjects.length; i++) {
@@ -127,9 +128,9 @@ module.export("osu_to_lua", function(osu_file_contents) {
     var track = hitobj_x_to_track_number(itr.position[0]);
 
     if (type == "slider") {
-      append_to_output(format("hold(%d,%d,%d)--%d", itr.startTime, track, itr.duration,i))
+      append_to_output(format("hd(%d,%d,%d)--%d", itr.startTime, track, itr.duration,i))
     } else {
-			append_to_output(format("note(%d,%d)--%d",itr.startTime, track,i))
+			append_to_output(format("nt(%d,%d)--%d",itr.startTime, track,i))
     }
 
   }
