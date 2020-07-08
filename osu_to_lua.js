@@ -14,13 +14,7 @@ module.export("osu_to_lua", function(osu_file_contents) {
   }
 	
 	function makeid(length) {
-	   var result           = '';
-	   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-	   var charactersLength = characters.length;
-	   for ( var i = 0; i < length; i++ ) {
-	      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-	   }
-	   return result;
+	   return Math.floor(Math.random() * 20000000);
 	}
 	
   function hitobj_x_to_track_number(hitobj_x) {
@@ -105,7 +99,7 @@ module.export("osu_to_lua", function(osu_file_contents) {
   append_to_output(format("rtv.%s = \"%s\"","AudioDescription",""));
   append_to_output(format("rtv.%s = \"%s\"","AudioCoverImageAssetId","--FILL IN COVERART ASSETID HERE--"));
   append_to_output(format("rtv.%s = \"%s\"","AudioArtist",beatmap.Artist));
-  append_to_output(format("rtv.%s = \"%s\"", "AudioId", makeid(35)));
+  append_to_output(format("rtv.%s = %s", "AudioId", makeid()));
   append_to_output(format("rtv.%s = \"%s\"", "AudioMapper", beatmap.Creator));
 
   append_to_output(format("rtv.%s = %d","AudioDifficulty",1));
