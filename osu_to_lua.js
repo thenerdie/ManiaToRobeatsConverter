@@ -99,7 +99,6 @@ module.export("osu_to_lua", function(osu_file_contents) {
   append_to_output(format("rtv.%s = \"%s\"","AudioDescription",""));
   append_to_output(format("rtv.%s = \"%s\"","AudioCoverImageAssetId","--FILL IN COVERART ASSETID HERE--"));
   append_to_output(format("rtv.%s = \"%s\"","AudioArtist",beatmap.Artist));
-  append_to_output(format("rtv.%s = %s", "AudioId", makeid()));
   append_to_output(format("rtv.%s = \"%s\"", "AudioMapper", beatmap.Creator));
 
   append_to_output(format("rtv.%s = %d","AudioDifficulty",1));
@@ -136,6 +135,18 @@ module.export("osu_to_lua", function(osu_file_contents) {
     append_to_output(format("\t[%d] = { Time = %d; BeatLength = %d; };",i+1, itr.offset, itr.beatLength))
   }
   append_to_output("};")
+
+  append_to_output(`
+    rtv.AudioId = (function()
+    local id = 0
+    local lastTime = 0
+    for i, obj in pairs(rtv.HitObjects) do
+      lastTime = obj.Time - lastTime
+      id = id + lastTime + obj.Track + obj.Type + (obj.Duration or 0)
+    end
+	  return id
+  end)()`)
+
   append_to_output("return rtv")
 
 	return rtv_lua
