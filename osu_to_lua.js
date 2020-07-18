@@ -137,15 +137,15 @@ module.export("osu_to_lua", function(osu_file_contents) {
   append_to_output("};")
 
   append_to_output(`
-    rtv.AudioId = (function()
+rtv.AudioId = (function()
     local id = 0
     local lastTime = 0
     for i, obj in pairs(rtv.HitObjects) do
       lastTime = obj.Time - lastTime
       id = id + lastTime + obj.Track + obj.Type + (obj.Duration or 0)
     end
-	  return id
-  end)()`)
+    return id
+end)()`)
 
   append_to_output("return rtv")
 
