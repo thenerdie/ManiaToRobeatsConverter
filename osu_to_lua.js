@@ -108,7 +108,6 @@ module.export("osu_to_lua", function(osu_file_contents) {
   append_to_output(format("rtv.%s = %d","AudioMod",0));
   append_to_output(format("rtv.%s = %d","AudioHitSFXGroup",0));
   append_to_output(format("rtv.%s = \"%s\"", "AudioDifficultyName", ""))
-  append_to_output(format("rtv.%s = %s", "AudioButtonColor", "Color3.new(1,1,1)"))
 
   append_to_output("rtv.HitObjects = {}")
 	append_to_output("local function nt(time,track) rtv.HitObjects[#rtv.HitObjects+1]={Time=time;Type=1;Track=track;} end")
@@ -135,17 +134,6 @@ module.export("osu_to_lua", function(osu_file_contents) {
     append_to_output(format("\t[%d] = { Time = %d; BeatLength = %d; };",i+1, itr.offset, itr.beatLength))
   }
   append_to_output("};")
-
-  append_to_output(`
-rtv.AudioId = (function()
-    local id = 0
-    local lastTime = 0
-    for i, obj in pairs(rtv.HitObjects) do
-      lastTime = obj.Time - lastTime
-      id = id + lastTime + obj.Track + obj.Type + (obj.Duration or 0)
-    end
-    return id
-end)()`)
 
   append_to_output("return rtv")
 
